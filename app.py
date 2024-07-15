@@ -8,9 +8,9 @@ import numpy as np; np.random.seed(sum(map(ord, 'calmap')))
 
 import matplotlib.pyplot as plt
 import pandas as pd
-import calmap
 import io
 import base64
+import july 
 
 app = Flask(__name__)
 app.json.sort_keys = False
@@ -21,31 +21,22 @@ def get_github_stats_json(username):
     return jsonify(json), 200, {'Content-Type': 'application/json'}
 
 
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-
 @app.route('/api/<username>/svg')
 def get_github_stats_svg(username):
     # https://pythonhosted.org/calmap/
     # https://github.com/e-hulten/july
     json = stats.get_contribution(username)
     
-    events = pd.Series(json['data'])
-    events.index = pd.to_datetime(events.index)
-    
     # Create a buffer to save the plot
     buffer = io.BytesIO()
 
     # Plot the calmap and save it to the buffer
-    fig = plt.figure(figsize=(10,4))
-    ax = fig.add_subplot(111)
-    cax = calmap.yearplot(events, 
-                    dayticks=[0, 2, 4, 6], 
-                    cmap=u'Greens')
+    july.heatmap(json['data'].keys(), json['data'].values(),
+                 title=f"{username}'s Github Activity", cmap="github",
+                 colorbar=True,
+                 fontfamily="monospace",
+                 fontsize=12)
     
-    divider = make_axes_locatable(cax)
-    lcax = divider.append_axes("right", size="2%", pad=0.5)
-    fig.colorbar(cax.get_children()[1], cax=lcax)
-
     plt.savefig(buffer, format='svg')
     plt.close()
 
@@ -55,10 +46,6 @@ def get_github_stats_svg(username):
 
     # Return the SVG response
     return send_file(buffer, mimetype='image/svg+xml')
-  
-@app.route('/')
-def index():
-    return 'Hello, World!'
 
 if __name__ == '__main__':
     app.run(debug=True)
