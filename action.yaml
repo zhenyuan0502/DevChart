@@ -4,7 +4,7 @@ branding:
   icon: 'upload-cloud'
   color: 'blue'
 inputs:
-  github_token_for_push:
+  GITHUB_TOKEN:
     description: 'GitHub token for pushing data to repository'
     required: true
   github_username:

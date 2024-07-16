@@ -7,12 +7,12 @@ jobs:
     name: Run fetcher
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Fetch data
         id: fetch-data
         uses: ./ # Uses an action in the root directory
         with:
-          github_token_for_push: 123
+          GITHUB_TOKEN: 'github_token_for_push'
           github_username: 'github_username'
           leetcode_username: 'leetcode_username'
       - name: Print the square
