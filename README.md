@@ -2,7 +2,13 @@
 
 DevChart is a Flask-based web application designed to visualize coding activity from platforms like GitHub and LeetCode. It generates statistical charts that represent a user's coding contributions over time, offering both JSON data and SVG visuals. You can use these charts to showcase your coding progress, share your achievements, or analyze your coding habits on your own blog or website.
 
-Inpired by [githubchart-api](https://github.com/2016rshah/githubchart-api) from Ruby, I ported it to Python Flask to support more features and platforms.
+Inpired by [githubchart-api](https://github.com/2016rshah/githubchart-api) from Ruby, I ported it to Python Flask to support more features and platforms. E.g dark and light mode depending on user preference, and more platforms...
+
+## Snapshot
+### Dark mode:
+![Dark mode](examples/dark.png)
+### Light mode:
+![Light mode](examples/light.png)
 
 ## Features
 
@@ -33,10 +39,16 @@ git clone https://github.com/zhenyuan0502/DevChart.git
 2. Run `init.ps1` to install the required Python packages as well as .env
 3. Run `run.ps1` or `F5` to start the local Flask server on `http://localhost:5000`
 4. Access:
-- `http://localhost:5000/api/github/<username>/svg` to get GitHub contribution chart data
-- `http://localhost:5000/api/leetcode/<username>/svg` to get LeetCode submission chart data
+- `http://localhost:5000/api/github/<username>/svg` to get GitHub contribution chart data in light mode
+- `http://localhost:5000/api/github/<username>/svg?theme_mode=dark` to get GitHub contribution chart data with dark theme
+- `http://localhost:5000/api/github/<username>/svg?mode=test&theme_mode=dark` to simulate GitHub contribution chart data with dark theme
+- `http://localhost:5000/api/github/<username>/json` to get GitHub contribution chart data in JSON format
 
-5. Deploy to your own server or cloud service to share your coding activity with others!
+The same with LeetCode:
+- `http://localhost:5000/api/leetcode/<username>/svg` to get LeetCode submission chart data
+- `http://localhost:5000/api/leetcode/<username>/json` to get LeetCode submission chart data in JSON format
+
+1. Deploy to your own server or cloud service to share your coding activity with others!
 
 ### Used libraries:
 - Flask
