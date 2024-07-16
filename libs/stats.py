@@ -40,17 +40,21 @@ def get_leetcode_submission(username):
         }
     })
     
+    data = {}
+    sum = 0
+    
     response_data = response.json()
     if 'errors' in response_data:
         return {
-            'error': 'User not found'
+            'username': username,
+            'title': 'LeetCode Submission',
+            'summary': f'LeetCode with {sum} submissions in past one year',
+            'data': data
         }
         
     user = response_data['data']['matchedUser']['userCalendar']
     submissions = json.loads(user['submissionCalendar'])
     
-    data = {}
-    sum = 0
     for key, val in submissions.items():
         date = tu.unixtimestamp_to_date(key)
         data[date] = val
