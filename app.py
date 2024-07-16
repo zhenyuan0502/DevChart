@@ -46,10 +46,11 @@ def get_github_stats_svg(username):
     july.heatmap(json['data'].keys(), json['data'].values(),
                  title=f"{username}'s Github Activity", cmap="github_transparent",
                  colorbar=True,
+                 weekday_width=3,
                  fontfamily="monospace",
                  fontsize=12,
                  facecolor='None')
-    
+  
     plt.savefig(buffer, backend='svg', format='svg', bbox_inches='tight', transparent=True)
     plt.close()
 

@@ -23,6 +23,7 @@ def heatmap(
     value_label: bool = False,
     date_label: bool = False,
     weekday_label: bool = True,
+    weekday_width: int = 1,
     month_label: bool = True,
     year_label: bool = True,
     month_grid: bool = False,
@@ -48,6 +49,7 @@ def heatmap(
         value_label: Whether to add value label inside grid.
         date_label: Whether to add date label inside grid.
         weekday_label: Whether to label the short axis with weekday abbreviations.
+        weekday_width: width=1 [M, T, W,...], width=3 [Mon, Tue, Wed,...].
         month_label: Whether to add month label(s) along the long axis.
         year_label: Whether to add year label(s) along the long axis.
         month_grid: Whether to outline each month in the grid.
@@ -80,6 +82,7 @@ def heatmap(
         value_label=value_label,
         date_label=date_label,
         weekday_label=weekday_label,
+        weekday_width=weekday_width,
         month_label=month_label,
         year_label=year_label,
         month_grid=month_grid,

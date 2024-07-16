@@ -45,6 +45,7 @@ def cal_heatmap(
     value_label: bool = False,
     date_label: bool = False,
     weekday_label: bool = True,
+    weekday_width: int = 1,
     month_label: bool = True,
     year_label: bool = True,
     month_grid: bool = False,
@@ -87,7 +88,7 @@ def cal_heatmap(
     else:
         ax.set_xticklabels("")
     if weekday_label:
-        add_weekday_label(ax, horizontal)
+        add_weekday_label(ax, weekday_width, horizontal)
     if month_label:
         add_month_label(ax, dates, horizontal)
     if year_label:
@@ -128,18 +129,18 @@ def add_date_label(ax, dates: List[date], horizontal: bool) -> None:
             ax.text(j + 0.5, i + 0.5, int(z), ha="center", va="center")
 
 
-def add_weekday_label(ax, horizontal: bool) -> None:
+def add_weekday_label(ax, weekday_width, horizontal: bool) -> None:
     if horizontal:
         ax.tick_params(axis="y", which="major", pad=8)
         ax.set_yticks([x + 0.5 for x in range(0, 7)])
         ax.set_yticklabels(
-            calendar.weekheader(width=1).split(" "),
+            calendar.weekheader(width=weekday_width).split(" "),
         )
     else:
         ax.tick_params(axis="x", which="major", pad=4)
         ax.set_xticks([x + 0.5 for x in range(0, 7)])
         ax.set_xticklabels(
-            calendar.weekheader(width=1).split(" "),
+            calendar.weekheader(width=weekday_width).split(" "),
         )
         ax.xaxis.tick_top()
 
