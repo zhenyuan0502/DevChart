@@ -75,6 +75,8 @@ def cal_heatmap(
             f"'date_label'={date_label}."
         )
 
+    # https://github.com/matplotlib/matplotlib/issues/1188#issuecomment-1447090197
+    # There is no way to have transparent in edgecolors that make disappear the grid lines
     pc = ax.pcolormesh(cal, edgecolors=ax.get_facecolor(), linewidth=0.25, cmap=cmap)
     pc.set_clim(cmin or np.nanmin(cal), cmax or np.nanmax(cal))
     ax.invert_yaxis()
