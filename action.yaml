@@ -40,5 +40,5 @@ runs:
       shell: bash
     - name: Fetch data
       id: fetch-data
-      run: python actions/fetcher.py
+      run: python actions/fetcher.py --run_mode github_action
       shell: bash
