@@ -1,4 +1,4 @@
-name: Data Fetcher Action
+name: DevChart Data Fetcher Action
 on: 
   workflow_dispatch:
   
@@ -18,3 +18,11 @@ jobs:
           username_leetcode: ${{ vars.username_leetcode }}
       - name: Print run_at
         run: echo "${{ steps.fetch-data.outputs.run_at }}"
+
+      - name: Commit and push if it changed
+        run: |
+            git config --global user.name 'DevChart APIs'
+            git config --global user.email 'action@github.com'
+            git add -A
+            git diff --quiet && git diff --staged --quiet || git commit -m "DevChart data update"
+            git push

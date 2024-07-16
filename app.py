@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import io
 import july 
-
+from heatmap_chart import generate_heatmap
 app = Flask(__name__)
 app.json.sort_keys = False
 
@@ -31,8 +31,6 @@ def generate_calendar_chart(username, stats_function):
     
     json = stats_function(username)
     
-    # Create a buffer to save the plot
-    buffer = io.BytesIO()
     background_color = ''
     if theme_mode == 'dark':
         plt.style.use('dark_background')
@@ -41,18 +39,15 @@ def generate_calendar_chart(username, stats_function):
         plt.style.use('default')
         background_color = '#f0f0f0'
         
-    july.heatmap(json['data'].keys(), json['data'].values(),
-                 title=f"{username}'s with {json['summary']}", cmap="github_transparent",
-                 colorbar=True,
-                 weekday_width=3,
-                 fontfamily="monospace",
-                 fontsize=12,
-                 facecolor='None')
+    # Create a buffer to save the plot
+    buffer = io.BytesIO()
+        
+    generate_heatmap(username, json)
   
     plt.savefig(buffer, backend='svg', format='svg', bbox_inches='tight', transparent=True)
     plt.close()
-
     buffer.seek(0)
+    
     if mode == 'test':
         return render_template('index.html', 
                                css_content='body {background-color: '+ background_color + ';}',

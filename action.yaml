@@ -1,4 +1,4 @@
-name: 'Dev Chart Retention'
+name: 'DevChart Retention'
 description: 'This Action is designed to store GitHub or Leetcode chart data in JSON and SVG format, push it into public repostiory and make use for your own website or blog.'
 branding:
   icon: 'upload-cloud'
