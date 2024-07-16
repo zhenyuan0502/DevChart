@@ -9,19 +9,17 @@ import numpy as np; np.random.seed(sum(map(ord, 'calmap')))
 import matplotlib.pyplot as plt
 import pandas as pd
 import io
-import base64
 import july 
 
 app = Flask(__name__)
 app.json.sort_keys = False
 
-@app.route('/api/<username>/json')
+@app.route('/api/github/<username>/json')
 def get_github_stats_json(username):
-    json = stats.get_contribution(username)
+    json = stats.get_github_contribution(username)
     return jsonify(json), 200, {'Content-Type': 'application/json'}
 
-@app.route('/api/<username>/svg')
-def get_github_stats_svg(username):
+def generate_calendar_chart(username, stats_function):
     mode = request.args.get('mode', default='prod')
     theme_mode = request.args.get('theme_mode', default='light')
     
@@ -31,7 +29,7 @@ def get_github_stats_svg(username):
     if theme_mode not in ['dark', 'light']:
         return jsonify({'error': 'Invalid theme_mode, accepted: dark, light'}), 400, {'Content-Type': 'application/json'}
     
-    json = stats.get_contribution(username)
+    json = stats_function(username)
     
     # Create a buffer to save the plot
     buffer = io.BytesIO()
@@ -44,7 +42,7 @@ def get_github_stats_svg(username):
         background_color = '#f0f0f0'
         
     july.heatmap(json['data'].keys(), json['data'].values(),
-                 title=f"{username}'s Github Activity", cmap="github_transparent",
+                 title=f"{username}'s with {json['summary']}", cmap="github_transparent",
                  colorbar=True,
                  weekday_width=3,
                  fontfamily="monospace",
@@ -65,6 +63,21 @@ def get_github_stats_svg(username):
     
     return jsonify({'error': 'Invalid'}), 400, {'Content-Type': 'application/json'}
 
+
+@app.route('/api/github/<username>/svg')
+def get_github_stats_svg(username):
+    return generate_calendar_chart(username, stats.get_github_contribution)
+
+
+@app.route('/api/leetcode/<username>/json')
+def get_leetcode_stats_json(username):
+    json = stats.get_leetcode_submission(username)
+    return jsonify(json), 200, {'Content-Type': 'application/json'}
+
+
+@app.route('/api/leetcode/<username>/svg')
+def get_leetcode_stats_svg(username):
+    return generate_calendar_chart(username, stats.get_leetcode_submission)
 
 # Load Browser Favorite Icon
 @app.route('/favicon.ico')

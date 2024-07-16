@@ -2,10 +2,11 @@ import bs4 as bs
 import requests
 import libs.text_utils as tu
 
-BASE_URL = 'https://github.com/users/<USERNAME>/contributions'
+GITHUB_BASE_URL = 'https://github.com/users/<USERNAME>/contributions'
+LEETCODE_BASE_URL = 'https://leetcode.com/graphql/'
 
-def get_contribution(username):
-    url = BASE_URL.replace('<USERNAME>', username)
+def get_github_contribution(username):
+    url = GITHUB_BASE_URL.replace('<USERNAME>', username)
     response = requests.get(url)
     soup = bs.BeautifulSoup(response.text, 'html.parser')
     
@@ -15,20 +16,49 @@ def get_contribution(username):
     data = {}
     
     table = soup.find('table', class_='ContributionCalendar-grid')
-    info_rows = table.find_all('tr', {'style': 'height: 10px'})
     
-    for row in info_rows:
-        weekday_label = row.find('td', class_='ContributionCalendar-label').find('span').text
-        
-        for i in row.find_all('td', class_='ContributionCalendar-day'):
-            date = i.get('data-date')
-            level = i.get('data-level')
-            data[date] = int(level)
+    for i in table.find_all('td', class_='ContributionCalendar-day'):
+        date = i.get('data-date')
+        level = i.get('data-level')
+        data[date] = int(level)
         
     return {
         'username': username,
         'title': 'Github Contribution',
-        'summary': summary,
+        'summary': f'GitHub with {summary}',
         'data': data
     }
+
+import json
+def get_leetcode_submission(username):
+    # Post request
+    response = requests.post(LEETCODE_BASE_URL, json={
+        'operationName': 'userProfileCalendar',
+        'query': "\n    query userProfileCalendar($username: String!, $year: Int) {\n  matchedUser(username: $username) {\n    userCalendar(year: $year) {\n      activeYears\n      streak\n      totalActiveDays\n      dccBadges {\n        timestamp\n        badge {\n          name\n          icon\n        }\n      }\n      submissionCalendar\n    }\n  }\n}\n    ",
+        'variables': {
+            'username': username,
+        }
+    })
     
+    response_data = response.json()
+    if 'errors' in response_data:
+        return {
+            'error': 'User not found'
+        }
+        
+    user = response_data['data']['matchedUser']['userCalendar']
+    submissions = json.loads(user['submissionCalendar'])
+    
+    data = {}
+    sum = 0
+    for key, val in submissions.items():
+        date = tu.unixtimestamp_to_date(key)
+        data[date] = val
+        sum += val
+    
+    return {
+        'username': username,
+        'title': 'LeetCode Submission',
+        'summary': f'LeetCode with {sum} submissions in past one year',
+        'data': data
+    }
