@@ -1,11 +1,11 @@
 import os
 
 # get the input and convert it to int
-github_token = os.environ.get("github_token_for_push")
+github_token = os.environ.get("GITHUB_TOKEN")
 if github_token:
-    print(f'github_token_for_push: {github_token}')
+    print(f'GITHUB_TOKEN: {github_token}')
 else:
-    raise ValueError('ERROR: github_token_for_push not provided')
+    raise ValueError('ERROR: GITHUB_TOKEN not provided')
 
 github_username = os.environ.get("github_username")
 if github_username:
