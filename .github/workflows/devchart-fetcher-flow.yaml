@@ -1,0 +1,20 @@
+name: Data Fetcher Action
+on: 
+  workflow_dispatch:
+  
+jobs:
+  job-crawler:
+    runs-on: ubuntu-latest
+    name: Run fetcher
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Fetch data
+        id: fetch-data
+        uses: ./ # Uses an action in the root directory
+        with:
+          REPOSITORY_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+          username_github: ${{ vars.username_github }}
+          username_leetcode: ${{ vars.username_leetcode }}
+      - name: Print run_at
+        run: echo "${{ steps.fetch-data.outputs.run_at }}"

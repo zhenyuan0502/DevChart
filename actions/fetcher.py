@@ -1,23 +1,25 @@
 import os
 
 # get the input and convert it to int
-github_token = os.environ.get("GITHUB_TOKEN")
-if github_token:
-    print(f'GITHUB_TOKEN: {github_token}')
+REPOSITORY_TOKEN = os.environ.get("REPOSITORY_TOKEN")
+if REPOSITORY_TOKEN:
+    print(f'REPOSITORY_TOKEN: {REPOSITORY_TOKEN}')
 else:
-    raise ValueError('ERROR: GITHUB_TOKEN not provided')
+    raise ValueError('ERROR: REPOSITORY_TOKEN not provided')
 
-github_username = os.environ.get("github_username")
-if github_username:
-    print(f'github_username: {github_username}')
+username_github = os.environ.get("username_github")
+if username_github:
+    print(f'username_github: {username_github}')
 else:
-    print('WARNING: github_username not provided')
+    print('WARNING: username_github not provided')
 
-leetcode_username = os.environ.get("leetcode_username")
-if leetcode_username:
-    print(f'leetcode_username: {leetcode_username}')
+username_leetcode = os.environ.get("username_leetcode")
+if username_leetcode:
+    print(f'username_leetcode: {username_leetcode}')
 else:
-    print('WARNING: leetcode_username not provided')
+    print('WARNING: username_leetcode not provided')
     
 from datetime import datetime
 print(f"::set-output name=run_at::{datetime.now().isoformat()}Z")
+
+
