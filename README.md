@@ -71,6 +71,9 @@ These are few items to be done:
 - [ ] Guidance here
 
 
+## Known Issues
+- In GitHub chart, sometime you may see it is not equal to the actual GitHub contribution chart in your profile, e.g 230 in your view but 225 in your incognitor view, it may be having caching issue or GitHub API... 
+
 ### Used libraries:
 - Flask
 - July (customized) https://github.com/e-hulten/july

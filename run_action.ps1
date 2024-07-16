@@ -1,3 +1,3 @@
 python actions/fetcher.py --run_mode local `
-    --username_github "your-username" `
-    --username_leetcode "your-username"
+    --username_github "zhenyuan0502" `
+    --username_leetcode "jiangzhenyuan"

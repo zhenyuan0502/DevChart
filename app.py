@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use('Agg')
+# matplotlib.use('Agg')
 
 from flask import Flask, jsonify, Response, send_file, render_template, url_for, request
 import libs.stats as stats
