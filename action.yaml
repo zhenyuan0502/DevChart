@@ -32,6 +32,12 @@ runs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
       shell: bash
+    - name: Pass Inputs to Shell
+      run: |
+        echo "REPOSITORY_TOKEN=${{ inputs.REPOSITORY_TOKEN }}" >> $GITHUB_ENV
+        echo "username_github=${{ inputs.username_github }}" >> $GITHUB_ENV
+        echo "username_leetcode=${{ inputs.username_leetcode }}" >> $GITHUB_ENV
+      shell: bash
     - name: Fetch data
       id: fetch-data
       run: python actions/fetcher.py
