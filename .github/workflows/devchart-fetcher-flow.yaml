@@ -13,7 +13,6 @@ jobs:
         id: fetch-data
         uses: ./actions # Uses an action in the actions directory
         with:
-          REPOSITORY_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
           username_github: ${{ vars.username_github }}
           username_leetcode: ${{ vars.username_leetcode }}
       - name: Print run_at

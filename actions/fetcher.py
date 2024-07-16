@@ -6,7 +6,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 RUN_MODE = ['local', 'github_action']
 parser = argparse.ArgumentParser(description='Dev Chart Fetcher')
 parser.add_argument('--run_mode', action="store", dest='run_mode', default='github_action')
-parser.add_argument('--repository_token', action="store", dest='repository_token', default=None)
 parser.add_argument('--username_github', action="store", dest='username_github', default=None)
 parser.add_argument('--username_leetcode', action="store", dest='username_leetcode', default=None)
 
@@ -15,13 +14,6 @@ if args.run_mode not in RUN_MODE:
     raise ValueError('Invalid run_mode, accepted: local, github_action')
 
 if args.run_mode == 'github_action':
-    # get the input and convert it to int
-    REPOSITORY_TOKEN = os.environ.get("REPOSITORY_TOKEN")
-    if REPOSITORY_TOKEN:
-        print(f'REPOSITORY_TOKEN: {REPOSITORY_TOKEN}')
-    else:
-        raise ValueError('ERROR: REPOSITORY_TOKEN not provided')
-
     USERNAME_GITHUB = os.environ.get("username_github")
     if USERNAME_GITHUB:
         print(f'username_github: {USERNAME_GITHUB}')
@@ -35,7 +27,6 @@ if args.run_mode == 'github_action':
         print('WARNING: username_leetcode not provided')
         
 elif args.run_mode == 'local':
-    REPOSITORY_TOKEN = args.repository_token
     USERNAME_GITHUB = args.username_github
     USERNAME_LEETCODE = args.username_leetcode
     

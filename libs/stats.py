@@ -1,9 +1,18 @@
 import bs4 as bs
 import requests
 import libs.text_utils as tu
+from datetime import datetime, timedelta
 
 GITHUB_BASE_URL = 'https://github.com/users/<USERNAME>/contributions'
 LEETCODE_BASE_URL = 'https://leetcode.com/graphql/'
+
+def get_data_temlate():
+    today = datetime.now().strftime('%Y-%m-%d')
+    last_366_days = (datetime.now() - timedelta(days=366)).strftime('%Y-%m-%d')    
+    data = {}
+    data[today] = 0
+    data[last_366_days] = 0
+    return data
 
 def get_github_contribution(username):
     url = GITHUB_BASE_URL.replace('<USERNAME>', username)
@@ -13,7 +22,7 @@ def get_github_contribution(username):
     summary = soup.find('h2', class_='f4 text-normal mb-2').text
     summary = tu.standardize_text(summary)
     
-    data = {}
+    data = get_data_temlate()
     
     table = soup.find('table', class_='ContributionCalendar-grid')
     
@@ -40,7 +49,7 @@ def get_leetcode_submission(username):
         }
     })
     
-    data = {}
+    data = get_data_temlate()
     sum = 0
     
     response_data = response.json()

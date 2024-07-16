@@ -4,9 +4,6 @@ branding:
   icon: 'upload-cloud'
   color: 'blue'
 inputs:
-  REPOSITORY_TOKEN:
-    description: 'GitHub token for pushing data to repository'
-    required: true
   username_github:
     description: 'GitHub username for getting contribution chart data'
     required: true
@@ -34,7 +31,6 @@ runs:
       shell: bash
     - name: Pass Inputs to Shell
       run: |
-        echo "REPOSITORY_TOKEN=${{ inputs.REPOSITORY_TOKEN }}" >> $GITHUB_ENV
         echo "username_github=${{ inputs.username_github }}" >> $GITHUB_ENV
         echo "username_leetcode=${{ inputs.username_leetcode }}" >> $GITHUB_ENV
       shell: bash

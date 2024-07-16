@@ -4,7 +4,7 @@ DevChart is a Flask-based web application designed to visualize coding activity 
 
 Inspired by [githubchart-api](https://github.com/2016rshah/githubchart-api) and [githubchart](https://github.com/akerl/githubchart) developed on Ruby, I ported it to Python Flask to support more features and platforms. E.g dark and light mode depending on user preference, and more platforms...
 
-The reason I chose Python Flask is that it is more lightweight and easier to deploy than Ruby on Rails. It is also more familiar to me, as a Data Engineer, Python would have more styles and libraries, such as matplotlib, pandas, etc,... to have more elegant and customizable charts.
+The reason I chose Python Flask is that it is more flexible. It is also more familiar to me, as a Data Engineer, Python would have more styles and libraries, such as matplotlib, pandas, etc,... to have more elegant and customizable charts. The output svg is also great, easy to scale rather than png or jpg.
 
 ## Snapshot
 ### Dark mode:
@@ -59,8 +59,16 @@ The same with LeetCode:
 
 For some reason, if you don't have a server to host the application, you can use GitHub Actions to update the chart automatically after a period of time. Since the chart is less change and mostly depending on your frequent coding activity, you can set the update time to be daily, weekly, or monthly in the GitHub Actions workflow.
 
+The idea is to use GitHub Actions to run the script to update the chart and push it back to the repository. Because GitHub provided CDN for the raw content, so you can use the link directly in your blog or website
 
+```
+<img src="https://raw.githubusercontent.com/<username>/DevChart/main/assets/github_dark.svg" />
+```
 
+These are few items to be done:
+- [x] GitHub Actions workflow to fetch and push commit to the repository
+- [ ] More generic parameters for the workflow
+- [ ] Guidance here
 
 
 ### Used libraries:
