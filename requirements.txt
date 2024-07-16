@@ -12,10 +12,9 @@ fonttools==4.53.1
 idna==3.7
 itsdangerous==2.2.0
 Jinja2==3.1.4
-july==0.1.3
 kiwisolver==1.4.5
-MarkupSafe==2.1.5
-matplotlib==3.7.3
+MarkupSafe==2.1.5 
+matplotlib==3.9.1
 numpy==1.26.4
 packaging==24.1
 pandas==2.2.2
