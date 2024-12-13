@@ -16,10 +16,29 @@ app.json.sort_keys = False
 
 @app.route('/api/github/<username>/json')
 def get_github_stats_json(username):
-    json = stats.get_github_contribution(username)
-    return jsonify(json), 200, {'Content-Type': 'application/json'}
+    """
+    Get GitHub contribution stats in JSON format.
+
+    Args:
+        username (str): GitHub username.
+
+    Returns:
+        Response: JSON response containing GitHub contribution stats.
+    """
+    json_data = stats.get_github_contribution(username)
+    return jsonify(json_data), 200, {'Content-Type': 'application/json'}
 
 def generate_calendar_chart(username, stats_function):
+    """
+    Generate a calendar chart for the given username using the specified stats function.
+
+    Args:
+        username (str): Username for which to generate the chart.
+        stats_function (function): Function to fetch stats for the given username.
+
+    Returns:
+        Response: SVG response containing the generated calendar chart.
+    """
     mode = request.args.get('mode', default='prod')
     theme_mode = request.args.get('theme_mode', default='light')
     
@@ -29,7 +48,7 @@ def generate_calendar_chart(username, stats_function):
     if theme_mode not in ['dark', 'light']:
         return jsonify({'error': 'Invalid theme_mode, accepted: dark, light'}), 400, {'Content-Type': 'application/json'}
     
-    json = stats_function(username)
+    json_data = stats_function(username)
     
     background_color = ''
     if theme_mode == 'dark':
@@ -42,7 +61,7 @@ def generate_calendar_chart(username, stats_function):
     # Create a buffer to save the plot
     buffer = io.BytesIO()
         
-    generate_heatmap(username, json)
+    generate_heatmap(username, json_data)
   
     plt.savefig(buffer, backend='svg', format='svg', bbox_inches='tight', transparent=True)
     plt.close()
@@ -61,22 +80,55 @@ def generate_calendar_chart(username, stats_function):
 
 @app.route('/api/github/<username>/svg')
 def get_github_stats_svg(username):
+    """
+    Get GitHub contribution stats in SVG format.
+
+    Args:
+        username (str): GitHub username.
+
+    Returns:
+        Response: SVG response containing GitHub contribution stats.
+    """
     return generate_calendar_chart(username, stats.get_github_contribution)
 
 
 @app.route('/api/leetcode/<username>/json')
 def get_leetcode_stats_json(username):
-    json = stats.get_leetcode_submission(username)
-    return jsonify(json), 200, {'Content-Type': 'application/json'}
+    """
+    Get LeetCode submission stats in JSON format.
+
+    Args:
+        username (str): LeetCode username.
+
+    Returns:
+        Response: JSON response containing LeetCode submission stats.
+    """
+    json_data = stats.get_leetcode_submission(username)
+    return jsonify(json_data), 200, {'Content-Type': 'application/json'}
 
 
 @app.route('/api/leetcode/<username>/svg')
 def get_leetcode_stats_svg(username):
+    """
+    Get LeetCode submission stats in SVG format.
+
+    Args:
+        username (str): LeetCode username.
+
+    Returns:
+        Response: SVG response containing LeetCode submission stats.
+    """
     return generate_calendar_chart(username, stats.get_leetcode_submission)
 
 # Load Browser Favorite Icon
 @app.route('/favicon.ico')
 def favicon():
+    """
+    Serve the favicon.
+
+    Returns:
+        Response: Favicon image.
+    """
     return url_for('static', filename='image/favicon.png')
 
 if __name__ == '__main__':

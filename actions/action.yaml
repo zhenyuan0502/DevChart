@@ -1,29 +1,29 @@
-name: 'DevChart Retention'
-description: 'This Action is designed to store GitHub or Leetcode chart data in JSON and SVG format, push it into public repostiory and make use for your own website or blog.'
+name: "DevChart Retention"
+description: "This Action is designed to store GitHub or Leetcode chart data in JSON and SVG format, push it into public repostiory and make use for your own website or blog."
 branding:
-  icon: 'upload-cloud'
-  color: 'blue'
+  icon: "upload-cloud"
+  color: "blue"
 inputs:
   username_github:
-    description: 'GitHub username for getting contribution chart data'
+    description: "GitHub username for getting contribution chart data"
     required: true
   username_leetcode:
-    description: 'Leetcode username for getting contribution chart data'
+    description: "Leetcode username for getting contribution chart data"
     required: true
 
 outputs:
   run_at:
-    description: 'Run time'
+    description: "Run time"
     value: ${{ steps.fetch-data.outputs.run_at }}
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Install Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11.9'
-        cache: 'pip'
+        python-version: "3.11.9"
+        cache: "pip"
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip

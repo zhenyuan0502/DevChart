@@ -1,12 +1,14 @@
 import calendar
-import numpy as np
-import matplotlib.pyplot as plt
-from july.colormaps import cmaps_dict
-from matplotlib.pyplot import Axes
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-from matplotlib.ticker import ScalarFormatter
-from typing import List, Any, Optional, Union
 from datetime import date
+from typing import List, Any, Optional, Union
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+from matplotlib.pyplot import Axes
+from matplotlib.ticker import ScalarFormatter
+
+from july.colormaps import cmaps_dict
 
 
 def date_grid(

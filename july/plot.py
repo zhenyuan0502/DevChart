@@ -1,10 +1,12 @@
-import numpy as np
 import calendar
 import datetime
-import matplotlib.pyplot as plt
 from typing import List, Any, Optional, Union, Tuple
-from matplotlib.pyplot import Axes
+
+import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.colors import LinearSegmentedColormap, ListedColormap
+from matplotlib.pyplot import Axes
+
 from july.helpers import (
     date_grid,
     cal_heatmap,

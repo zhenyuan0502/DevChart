@@ -1,27 +1,27 @@
-name: DevChart Data Fetcher Action
+name: "DevChart Data Fetcher Action"
 on: 
   workflow_dispatch:
   
 jobs:
   job-crawler:
-    runs-on: ubuntu-latest
-    name: Run fetcher
+    runs-on: "ubuntu-latest"
+    name: "Run fetcher"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Fetch data
-        id: fetch-data
-        uses: ./actions # Uses an action in the actions directory
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+      - name: "Fetch data"
+        id: "fetch-data"
+        uses: "./actions" # Uses an action in the actions directory
         with:
-          username_github: ${{ vars.username_github }}
-          username_leetcode: ${{ vars.username_leetcode }}
-      - name: Print run_at
-        run: echo "${{ steps.fetch-data.outputs.run_at }}"
+          username_github: "${{ vars.username_github }}"
+          username_leetcode: "${{ vars.username_leetcode }}"
+      - name: "Print run_at"
+        run: "echo ${{ steps.fetch-data.outputs.run_at }}"
 
-      - name: Commit and push if it changed
+      - name: "Commit and push if it changed"
         run: |
             git config --global user.name 'DevChart APIs'
             git config --global user.email 'action@github.com'
             git add -A
-            git diff --quiet && git diff --staged --quiet || git commit -m "DevChart data update"
+            git diff --quiet && git diff --staged --quiet || git commit -m 'DevChart data update'
             git push

@@ -6,7 +6,13 @@ from datetime import datetime, timedelta
 GITHUB_BASE_URL = 'https://github.com/users/<USERNAME>/contributions'
 LEETCODE_BASE_URL = 'https://leetcode.com/graphql/'
 
-def get_data_temlate():
+def get_data_template():
+    """
+    Create a data template with today's date and the date 366 days ago.
+
+    Returns:
+        dict: A dictionary with today's date and the date 366 days ago as keys, both initialized to 0.
+    """
     today = datetime.now().strftime('%Y-%m-%d')
     last_366_days = (datetime.now() - timedelta(days=366)).strftime('%Y-%m-%d')    
     data = {}
@@ -15,6 +21,15 @@ def get_data_temlate():
     return data
 
 def get_github_contribution(username):
+    """
+    Fetch GitHub contribution data for a given username.
+
+    Args:
+        username (str): GitHub username.
+
+    Returns:
+        dict: A dictionary containing the username, title, summary, and contribution data.
+    """
     url = GITHUB_BASE_URL.replace('<USERNAME>', username)
     response = requests.get(url)
     soup = bs.BeautifulSoup(response.text, 'html.parser')
@@ -22,7 +37,7 @@ def get_github_contribution(username):
     summary = soup.find('h2', class_='f4 text-normal mb-2').text
     summary = tu.standardize_text(summary)
     
-    data = get_data_temlate()
+    data = get_data_template()
     
     table = soup.find('table', class_='ContributionCalendar-grid')
     
@@ -40,7 +55,15 @@ def get_github_contribution(username):
 
 import json
 def get_leetcode_submission(username):
-    # Post request
+    """
+    Fetch LeetCode submission data for a given username.
+
+    Args:
+        username (str): LeetCode username.
+
+    Returns:
+        dict: A dictionary containing the username, title, summary, and submission data.
+    """
     response = requests.post(LEETCODE_BASE_URL, json={
         'operationName': 'userProfileCalendar',
         'query': "\n    query userProfileCalendar($username: String!, $year: Int) {\n  matchedUser(username: $username) {\n    userCalendar(year: $year) {\n      activeYears\n      streak\n      totalActiveDays\n      dccBadges {\n        timestamp\n        badge {\n          name\n          icon\n        }\n      }\n      submissionCalendar\n    }\n  }\n}\n    ",
@@ -49,7 +72,7 @@ def get_leetcode_submission(username):
         }
     })
     
-    data = get_data_temlate()
+    data = get_data_template()
     sum = 0
     
     response_data = response.json()
