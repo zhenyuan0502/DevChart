@@ -17,11 +17,43 @@ The reason I chose Python Flask is that it is more flexible. It is also more fam
 - **GitHub Contribution Chart**: Visualize your GitHub contributions in a calendar heatmap.
 - **LeetCode Submission Chart**: Get insights into your LeetCode submission in a calendar heatmap.
 - Supports output in both JSON and SVG formats for easy integration and sharing.
+- **Vue3 + Vite Module**: Standalone client-side module for embedding charts in web applications.
 
 ## Roadmap
 - (In-Progress) Deploy to user own GitHub Actions for automatic updates. Then you can use the generated SVG link directly
 - Support more platforms like Codeforces, AtCoder, etc.
 - Customizable chart styles and colors.
+
+## Vue3 + Vite Module
+
+A standalone Vue3 + Vite module is now available in the `vue-module/` directory! This allows you to embed DevChart functionality directly in your web applications without running a Flask server.
+
+### Quick Start with Vue Module
+
+```bash
+cd vue-module
+npm install
+npm run dev
+```
+
+### Usage in Your Vue App
+
+```vue
+<template>
+  <DevChart 
+    username="your-username"
+    platform="github"
+    theme="dark"
+    output-format="svg"
+  />
+</template>
+
+<script setup>
+import { DevChart } from './vue-module/src'
+</script>
+```
+
+See the [Vue Module Documentation](vue-module/README.md) for complete usage instructions, API reference, and examples.
 
 ## Getting Started
 
