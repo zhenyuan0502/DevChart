@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevChart Vue Module Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .demo-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .demo-section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 10px;
+        }
+        
+        .control-group label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+        }
+        
+        .control-group input, 
+        .control-group select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>DevChart Vue Module Demo</h1>
+            
+            <div class="demo-section">
+                <h2>GitHub Contribution Chart</h2>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Username:</label>
+                        <input v-model="githubUsername" placeholder="Enter GitHub username" />
+                    </div>
+                    <div class="control-group">
+                        <label>Theme:</label>
+                        <select v-model="githubTheme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Output:</label>
+                        <select v-model="githubOutput">
+                            <option value="svg">SVG Only</option>
+                            <option value="json">JSON Only</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <dev-chart
+                    v-if="githubUsername"
+                    :username="githubUsername"
+                    platform="github"
+                    :theme="githubTheme"
+                    :output-format="githubOutput"
+                    :width="900"
+                    :height="180"
+                />
+            </div>
+            
+            <div class="demo-section">
+                <h2>LeetCode Submission Chart</h2>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Username:</label>
+                        <input v-model="leetcodeUsername" placeholder="Enter LeetCode username" />
+                    </div>
+                    <div class="control-group">
+                        <label>Theme:</label>
+                        <select v-model="leetcodeTheme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Output:</label>
+                        <select v-model="leetcodeOutput">
+                            <option value="svg">SVG Only</option>
+                            <option value="json">JSON Only</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <dev-chart
+                    v-if="leetcodeUsername"
+                    :username="leetcodeUsername"
+                    platform="leetcode"
+                    :theme="leetcodeTheme"
+                    :output-format="leetcodeOutput"
+                    :width="900"
+                    :height="180"
+                />
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

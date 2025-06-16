@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevChart Vue Module Example</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .example {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .controls {
+            margin-bottom: 15px;
+        }
+        .controls input, .controls select {
+            margin: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .dark-theme {
+            background-color: #1a1a1a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>DevChart Vue Module Examples</h1>
+            
+            <div class="example">
+                <h2>GitHub Contribution Chart</h2>
+                <div class="controls">
+                    <label>Username: 
+                        <input v-model="githubUsername" placeholder="Enter GitHub username">
+                    </label>
+                    <label>Theme: 
+                        <select v-model="githubTheme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </label>
+                    <label>Output: 
+                        <select v-model="githubOutput">
+                            <option value="svg">SVG Only</option>
+                            <option value="json">JSON Only</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </label>
+                </div>
+                
+                <!-- This would be the DevChart component in a real implementation -->
+                <div class="chart-placeholder" :class="{ 'dark-theme': githubTheme === 'dark' }">
+                    <p><strong>Chart would render here:</strong></p>
+                    <p>Platform: GitHub</p>
+                    <p>Username: {{ githubUsername || 'Not specified' }}</p>
+                    <p>Theme: {{ githubTheme }}</p>
+                    <p>Output: {{ githubOutput }}</p>
+                    
+                    <!-- Simulated chart -->
+                    <div style="border: 2px dashed #ccc; padding: 20px; text-align: center; margin-top: 10px;">
+                        📊 GitHub Contribution Heatmap<br>
+                        <small>(Component would render the actual SVG chart here)</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example">
+                <h2>LeetCode Submission Chart</h2>
+                <div class="controls">
+                    <label>Username: 
+                        <input v-model="leetcodeUsername" placeholder="Enter LeetCode username">
+                    </label>
+                    <label>Theme: 
+                        <select v-model="leetcodeTheme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </label>
+                    <label>Output: 
+                        <select v-model="leetcodeOutput">
+                            <option value="svg">SVG Only</option>
+                            <option value="json">JSON Only</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </label>
+                </div>
+                
+                <!-- This would be the DevChart component in a real implementation -->
+                <div class="chart-placeholder" :class="{ 'dark-theme': leetcodeTheme === 'dark' }">
+                    <p><strong>Chart would render here:</strong></p>
+                    <p>Platform: LeetCode</p>
+                    <p>Username: {{ leetcodeUsername || 'Not specified' }}</p>
+                    <p>Theme: {{ leetcodeTheme }}</p>
+                    <p>Output: {{ leetcodeOutput }}</p>
+                    
+                    <!-- Simulated chart -->
+                    <div style="border: 2px dashed #ccc; padding: 20px; text-align: center; margin-top: 10px;">
+                        🧩 LeetCode Submission Heatmap<br>
+                        <small>(Component would render the actual SVG chart here)</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example">
+                <h2>Usage Code Examples</h2>
+                
+                <h3>Vue Component Usage:</h3>
+                <pre style="background: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto;"><code>&lt;template&gt;
+  &lt;DevChart 
+    username="{{ githubUsername || 'your-username' }}"
+    platform="github"
+    theme="{{ githubTheme }}"
+    output-format="{{ githubOutput }}"
+    :width="900"
+    :height="180"
+  /&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { DevChart } from 'devchart-vue'
+&lt;/script&gt;</code></pre>
+
+                <h3>Direct API Usage:</h3>
+                <pre style="background: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto;"><code>import { getGitHubContribution, generateHeatmap } from 'devchart-vue'
+
+// Fetch data
+const data = await getGitHubContribution('{{ githubUsername || 'username' }}')
+
+// Generate chart
+const svg = generateHeatmap(
+  data.data, 
+  data.username, 
+  data.summary,
+  { theme: '{{ githubTheme }}', width: 900, height: 180 }
+)</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    githubUsername: 'zhenyuan0502',
+                    githubTheme: 'light',
+                    githubOutput: 'svg',
+                    
+                    leetcodeUsername: '',
+                    leetcodeTheme: 'light', 
+                    leetcodeOutput: 'svg'
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
